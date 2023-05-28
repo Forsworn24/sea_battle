@@ -118,22 +118,22 @@ int main() {
             printf("Отправка сообщений о начале игры!\n");
             printf("Отправляем следующее сообщение: %s\n", start_game);
 
-            // Сообщения о начале игры
-            sendto(network_context->sock,
-                (const char *)start_game,
-                strlen(start_game),
-                0,
-                (const struct sockaddr *) &reader_addr1,
-                sizeof(reader_addr1));
+            // Сообщения о начале игры - a
+            // sendto(network_context->sock,
+            //     (const char *)start_game,
+            //     strlen(start_game),
+            //     0,
+            //     (const struct sockaddr *) &reader_addr1,
+            //     sizeof(reader_addr1));
 
-            sendto(network_context->sock,
-                (const char *)start_game,
-                strlen(start_game),
-                0,
-                (const struct sockaddr *) &reader_addr2,
-                sizeof(reader_addr2));
+            // sendto(network_context->sock,
+            //     (const char *)start_game,
+            //     strlen(start_game),
+            //     0,
+            //     (const struct sockaddr *) &reader_addr2,
+            //     sizeof(reader_addr2));
 
-            // Сообщения о параметрах игроков
+            // Сообщения о параметрах игроков - b
             sendto(network_context->sock,
                 (const char *)buf_params1,
                 strlen(buf_params1),

@@ -1,15 +1,68 @@
 #include "ships.h"
 
+int check_ship(int c_ships)
+{
+    if (c_ships == 1)
+        return 1;
+    if (c_ships == 2)
+        return 2;
+    if (c_ships == 3)
+        return 3;
+    if (c_ships == 4)
+        return 4;
+}
+
+char *input_ship(int count_ships)
+{
+    int i = 0;
+    char *ship;
+    char user_input[10];
+    int count;
+
+    ship = (char *)malloc(count_ships * SHIP_SIZE * sizeof(char) + 1);
+    count = check_ship(count_ships);
+    while (count_ships > 0)
+    {
+        scanf("%s", user_input);
+        // printf("BEFORE_I = %d\n", i);
+        while (i < count * 4)
+        {
+            ship[i] = user_input[i % 4];
+            i++;
+            printf("%d\n", i);
+            if (i % 4 == 0)
+                break;
+        }
+        // printf("AFTER_I = %d\n", i);
+        // printf("CURRENT_SHIP = %s\n", ship);
+        count_ships--;
+    }
+    ship[count * 4] = '\0';
+
+    // if (count == 1)
+    //     t->four = strdup(ship);
+    // else if (count == 2)
+    //     t->three = strdup(ship);
+    // else if (count == 3)
+    //     t->two = strdup(ship);
+    // else if (count == 4)
+    //     t->one = strdup(ship);
+    // else
+    //     printf("BAD INPUT");
+
+    printf("SHIP = %s\n", ship);
+    return ship;
+}
+
 void placeholder(char *buffer, t_ships *t)
 {
     int four, three, two, one;
-    char user_input[10];
+    // char user_input[10];
 
     four = 1;
     three = 2;
     two = 3;
     one = 4;
-
     // Заполняем айдишник
     printf("Айди игрока: %c\n", buffer[0]);
     t->id = buffer[0];
@@ -17,47 +70,68 @@ void placeholder(char *buffer, t_ships *t)
     // Четырёхпалубные корабли
     printf("Пример заполнения: (x/y l/r A1) - xrA1\n");
     printf("Заполняем четырехпалубные корабли:  %d\n", four);
-    while (four > 0)
-    {
-        printf("Введите:\n");
-        scanf("%s", user_input);
-        // Проверка данных на кооректность
-        // НАПИСАТЬ!!!
-        // Условно берем так, что мы всегда ставим корабли правильно!
-        strncpy(t->four, user_input, 4);
-        t->four[4] = '\0';
-        
-        four--;
-    }
-    printf("Четырёхпалубник заполнен!\n");
-
-    // Трёхпалубные корабли
-    // printf("Заполняем трехпалубные корабли: \n");
-    // while (three > 0)
+    // while (four > 0)
     // {
-    //     fgets(u_input, 10, stdin);
+    //     printf("Введите:\n");
+    //     scanf("%s", user_input);
     //     // Проверка данных на кооректность
     //     // НАПИСАТЬ!!!
     //     // Условно берем так, что мы всегда ставим корабли правильно!
-    //     strncpy(t->three, u_input, 4);
-    //     t->three[8] = '\0';
+    //     strncpy(t->four, user_input, 4);
+    //     t->four[4] = '\0';
         
+    //     four--;
+    // }
+    t->four = strdup(input_ship(1));
+    printf("Четырёхпалубник заполнен!\n");
+    
+
+    // Трёхпалубные корабли
+    printf("Заполняем трехпалубные корабли: \n");
+    t->three = strdup(input_ship(2));
+    // int i = 0;
+    // while (three > 0)
+    // {
+    //     scanf("%s", user_input);
+    //     // Проверка данных на кооректность
+    //     // НАПИСАТЬ!!!
+    //     // Условно берем так, что мы всегда ставим корабли правильно!
+    //     // t->three
+    //     // _ _ _ _ _ _ _ _ _
+    //     // x r A 1 _ _ _ _ _
+    //     // x r B 5 _ _ _ _ _
+    //     // x r A 1 x r B 5 \0
+    //     // printf("CUR_USER_INPUT = %s\n", user_input);
+    //     // printf("BEFORE_I = %d\n", i);
+    //     while (i < 8)
+    //     {
+    //         t->three[i] = user_input[i % 4];
+    //         i++;
+    //         if (i % 4 == 0)
+    //             break;
+    //     }
+    //     // printf("AFTER_I = %d\n", i );
+    //     // printf("I_TREE = %s\n", input_three);
+    //     // strncpy(t->three, user_input, 4);
     //     three--;
     // }
-    // printf("Трехпалубники заполнены заполнены!\n");
+    // t->three[8] = '\0';
+    // // printf("LEN THREE %ld\n", strlen(t->three));
+    printf("Трехпалубники заполнены заполнены!\n");
 
+    printf("Заполняем two корабли:\n");
+    t->two = strdup(input_ship(3));
+    printf("Two заполнен!\n");
 
-    // Вывод на экран полученных данных
-    printf("Итоговые результаты заполнения:\n");
-    printf("_______________________\n");
-    printf("ID игрока: %c\n", t->id);
-    printf("Параметры четырехпалубника: %s\n", t->four);
-    printf("Параметры трехпалубников: %s\n", t->three);
+    printf("Заполняем ont корабли:\n");
+    t->one = strdup(input_ship(4));
+    printf("One заполнен!\n");
 }
 
 void keep_map(char *buffer)
 {
     t_ships *t;
+    char *buf;
     // 1. Вывести правила заполнения на экран
     // 2. Заполнить нашу карту кораблями - заполнятор карты
     // 3. Обратно отправить серверу нашу заполненную карту ?
@@ -72,6 +146,9 @@ void keep_map(char *buffer)
     printf("Параметры корабля: (гориз/вертик лево/право клетка_постановки )\n");
     printf("Пример:		(x/y l/r A1)\n");
 
+    buf = strdup(buffer);
+    printf("OUR BUFFER = %s\n", buf);
+    
 
     // buffer[1] - A 1    buffer[11] - B 1
     // buffer[2] - A 2    buffer[12] - B 2
@@ -103,6 +180,21 @@ void keep_map(char *buffer)
     // на следующее действие (зацикливаемся пока не расставим все корабли)
     //  4. Как расставили - сообщение об успехе и готовности.
 
-    placeholder(buffer, t);
+    placeholder(buf, t);
+
+    // Вывод на экран полученных данных
+    printf("Итоговые результаты заполнения:\n");
+    printf("_______________________\n");
+    printf("ID игрока: %c\n", t->id);
+    printf("Параметры четырехпалубника: %s\n", t->four);
+    printf("Параметры трехпалубников: %s\n", t->three);
+    printf("Параметры трехпалубников: %s\n", t->two);
+    printf("Параметры трехпалубников: %s\n", t->one);
+
+    // Write function of replacing dots on map
+    // ...
+
+
+
 
 }

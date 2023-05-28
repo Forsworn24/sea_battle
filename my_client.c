@@ -96,9 +96,12 @@ int main() {
         {
             buffer[n] = '\0';
             printf("Сервер: %s\n", buffer);
+            char *cp_buffer;
             // Заполнение карты кораблями
+            cp_buffer = strdup(buffer);
             printf("Приступаем к заполнению!!!\n");
-            keep_map(buffer);
+            printf("CP_BUFFER = %s\n", cp_buffer);
+            keep_map(cp_buffer);
             break;
         }
     }

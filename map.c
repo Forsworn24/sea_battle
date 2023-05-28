@@ -43,7 +43,7 @@ void print_player_info(t_player *p)
 
 
     printf("Данные об игроке: \n");
-    printf("Уникальный номер:\n%d\n", p->id);
+    printf("Уникальный номер:\n%c\n", p->id);
     printf("Карта игрока:\n");
     i = 0;
     j = 0;
