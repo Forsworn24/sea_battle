@@ -52,6 +52,16 @@ void network_fini(NetworkContext *ctx)
   }
 }
 
+void print_map(char *map)
+{
+    for (int i = 0; i < 10; ++i) {
+        for (int j = 0; j < 10; ++j) {
+            printf("%c", map[10 * j + i]);
+        }
+        printf("\n");
+    }
+}
+
 int main() {
     char buffer[MAXLINE];
     char start_game[MAXLINE] = "Игра началась!\nВаши данные:\n";
@@ -94,8 +104,8 @@ int main() {
             printf("%d \n", cliaddr.sin_port);
             connect_players += 1;
         }
-        
-        if (connect_players < 2)
+
+        if (connect_players == 1)
         {
             memcpy(&reader_addr1, &cliaddr, sizeof(cliaddr));
             printf("Заполнена память для игрока с портом: %d\n", cliaddr.sin_port);
@@ -103,7 +113,7 @@ int main() {
             buf_params1 = buffer_message(p1);
             print_player_info(p1);
         }
-        else
+        else if (connect_players == 2)
         {
             memcpy(&reader_addr2, &cliaddr, sizeof(cliaddr));
             printf("Заполнена память для игрока с портом: %d\n", cliaddr.sin_port);
@@ -146,11 +156,11 @@ int main() {
                 0,
                 (const struct sockaddr *) &reader_addr2,
                 sizeof(reader_addr2));
-        }
     }
 
     free_data(p1);
     free_data(p2);
+
 
     return 0;
 }
