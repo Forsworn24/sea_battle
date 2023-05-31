@@ -20,7 +20,7 @@ enum Ships {SingleDeck = 4, TwoDeck = 3, ThreeDeck = 2, FourDeck = 1};
 
 // Структура игрока
 typedef struct s_player {
-    char id;
+    unsigned short id;
     char **map;
 } t_player;
 
@@ -36,7 +36,7 @@ typedef struct s_ships {
 
 // Функции работы с картой (заполнением данных)
 void print_player_info(t_player *p);
-void fill_data(t_player *p, char pid);
+void fill_data(t_player *p, char *buffer);
 void free_data(t_player *p);
 t_player *init_player();
 char *buffer_message(t_player *p);

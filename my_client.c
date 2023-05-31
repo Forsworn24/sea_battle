@@ -78,9 +78,11 @@ int validate_ship(char *map, char coordinates[3], int type)
 
 void print_map(char *map)
 {
+    printf("   A B C D E F G H I J\n");
     for (int i = 0; i < 10; ++i) {
+        printf("%d ", i);
         for (int j = 0; j < 10; ++j) {
-            printf("%c", map[10 * j + i]);
+            printf(" %c", map[10 * j + i]);
         }
         printf("\n");
     }
@@ -115,12 +117,13 @@ void fill_ship_type(char **map, int type, int count)
         printf("Заполняем однопалубные корабли..\n");
     else if (type == 2)
         printf("Заполняем двухпалубные корабли..\n");
-	else if (type == 3)
-        printf("Заполняем трехпалубный корабли..\n");
-	else if (type == 4)
-        printf("Заполняем четырехпалубный корабли..\n");
+    else if (type == 3)
+          printf("Заполняем трехпалубный корабли..\n");
+    else if (type == 4)
+          printf("Заполняем четырехпалубный корабли..\n");
 
-	while (count > 0) {
+    while (count > 0) 
+    {
         printf("Осталось заполнить %d кораблей.\n", count);
         printf("Введите данные о корабле:\n");
 
@@ -149,8 +152,8 @@ char *fill_map(void)
 
 
 	// fill_ship_type(&map, 1, 4);
-	fill_ship_type(&map, 2, 3);
-	fill_ship_type(&map, 3, 2);
+	// fill_ship_type(&map, 2, 3);
+	// fill_ship_type(&map, 3, 2);
 	fill_ship_type(&map, 4, 1);
 	return map;
 }
@@ -184,17 +187,44 @@ int main() {
             printf("Сервер: %s\n", buffer);
             char *cp_buffer;
             // Заполнение карты кораблями
-            cp_buffer = strdup(buffer);
+            // cp_buffer = strdup(buffer);
             printf("Приступаем к заполнению!!!\n");
-            printf("CP_BUFFER = %s\n", cp_buffer);
+            // printf("CP_BUFFER = %s\n", cp_buffer);
             map = fill_map();
             // keep_map(cp_buffer);
+            // char map_context[102] = {0};
+            // map_context[0] = '#';
+            // strcpy(map_context + 1, map);
+            // network_send(network_context, map, 100);
+            // print_map(map);
+            // printf("%s\n", map_context);
+            network_send(network_context, map, 100);
             break;
         }
     }
 
+    while(1)
+    {
+        int n = network_recv(network_context, buffer, MAXLINE - 1);
+        if (n != -1)
+        {
+            buffer[n] = '\0';
+            printf("Сервер: %s\n", buffer);
+            char *buf;
+            buf = strdup(buffer);
+            if (buf[0] == 'Y')
+            {
+                char coord[3];
+                scanf("%s", coord);
+                network_send(network_context, (char *) coord, 3);
+            }
+            // char *cp_buffer;
+            // cp_buffer = strdup(buffer);
+        }
+    }
+
     // return map to server
-    network_send(network_context, map, 100);
+    // network_send(network_context, map, 100);
 
     return 0;
 }

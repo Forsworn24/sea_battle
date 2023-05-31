@@ -41,22 +41,31 @@ void print_player_info(t_player *p)
     int i;
     int j;
 
-
     printf("Данные об игроке: \n");
-    printf("Уникальный номер:\n%c\n", p->id);
+    printf("Уникальный номер:\n%d\n", p->id);
     printf("Карта игрока:\n");
     i = 0;
     j = 0;
-    while (i < MAP_SIZE)
-    {
-        j = 0;
-        while (j < MAP_SIZE)
-        {
-            printf("%c", p->map[i][j]);
-            j++;
+    // while (i < MAP_SIZE)
+    // {
+    //     j = 0;
+    //     while (j < MAP_SIZE)
+    //     {
+    //         printf("%c", p->map[i][j]);
+    //         j++;
+    //     }
+    //     printf("\n");
+    //     i++;
+    // }
+    // printf("\n");
+
+    printf("   A B C D E F G H I J\n");
+    for (int i = 0; i < 10; ++i) {
+        printf("%d ", i);
+        for (int j = 0; j < 10; ++j) {
+            printf(" %c", p->map[i][j]);
         }
         printf("\n");
-        i++;
     }
     printf("\n");
 }
@@ -78,24 +87,25 @@ t_player *init_player()
     return p;
 }
 
-void fill_data(t_player *p, char pid)
+void fill_data(t_player *p, char *buffer)
 {
     int i;
     int j;
+    int k;
 
     i = 0;
+    k = 0;
     while (i < MAP_SIZE)
     {
         j = 0;
         while (j < MAP_SIZE)
         {
-            p->map[i][j] = '.';
+            p->map[j][i] = buffer[k];
             j++;
+            k++;
         }
         i++;
     }
-
-    p->id = pid;
 }
 
 void free_data(t_player *p)
