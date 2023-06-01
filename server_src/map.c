@@ -1,4 +1,4 @@
-#include "ships.h"
+#include "../ships.h"
 
 char *buffer_message(t_player *p)
 {
