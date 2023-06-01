@@ -151,9 +151,9 @@ char *fill_map(void)
 	printf("Пример:		(x/y l/r A1)\n");
 
 
-	// fill_ship_type(&map, 1, 4);
-	// fill_ship_type(&map, 2, 3);
-	// fill_ship_type(&map, 3, 2);
+	fill_ship_type(&map, 1, 4);
+	fill_ship_type(&map, 2, 3);
+	fill_ship_type(&map, 3, 2);
 	fill_ship_type(&map, 4, 1);
 	return map;
 }
@@ -209,14 +209,24 @@ int main() {
         if (n != -1)
         {
             buffer[n] = '\0';
-            printf("Сервер: %s\n", buffer);
+            if (buffer[0] != '#' && buffer[0] != 'S' && buffer[0] != 'C')
+                printf("Сервер: %s\n", buffer);
             char *buf;
             buf = strdup(buffer);
+            if (buf[0] == '#')
+            {
+                print_map(buffer + 1);
+            }
             if (buf[0] == 'Y')
             {
                 char coord[3];
                 scanf("%s", coord);
                 network_send(network_context, (char *) coord, 3);
+            }
+            if (buf[0] == 'S' || buf[0] == 'C')
+            {
+                printf("%s\n", buffer);
+                break;
             }
             // char *cp_buffer;
             // cp_buffer = strdup(buffer);
