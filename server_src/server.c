@@ -1,4 +1,4 @@
-#include "ships.h"
+#include "../ships.h"
 
 struct _NetworkContext {
   int sock;
